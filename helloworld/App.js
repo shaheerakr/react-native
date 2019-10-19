@@ -14,103 +14,83 @@ import {
   View,
   Text,
   StatusBar,
+  Image
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-export default class App extends Component {
+export default class App extends Component {  
+  constructor(){
+    super()
+    this.state ={}
+    this.state.customStyles = {
+      color : 'red'
+    }
+    this.state.imageInfo = {
+      uri : "https://scontent.fkhi17-1.fna.fbcdn.net/v/t1.0-0/cp0/e15/q65/p320x320/58462296_2431269236883056_6958992074980982784_n.jpg?_nc_cat=103&efg=eyJpIjoiYiJ9&_nc_oc=AQlXU_nBw-qaxw5YQ99IBNsaW1j2Z97jSg0-kXZ3CNOL8T6fKuGs5N4P8ZpT6GGCZZo&_nc_ht=scontent.fkhi17-1.fna&oh=25babea41f3895b3013985afa8db419c&oe=5E1881C7",
+      name : "Shahster"
+    }
+    setInterval(()=> {
+        (this.state.customStyles.color == 'red')?
+        ( this.setState({
+            customStyles :{
+              color : 'green'
+            }
+          })
+        ): (
+          this.setState({
+            customStyles :{
+              color : 'red'
+            }
+          })
+        )
+        if(this.state.imageInfo.name ==='Shahster'){
+          this.setState({
+            imageInfo : {
+              uri : "https://scontent.fkhi17-1.fna.fbcdn.net/v/t1.0-0/cp0/e15/q65/p320x320/52934111_2123313157722665_8028464478150459392_n.jpg?_nc_cat=111&efg=eyJpIjoiYiJ9&_nc_oc=AQmNuUUXABqheutNF2KSBDPlWGpcHmEoWayQEYVNTDfF_tWhHkb9R2Av_ssBMobtZ24&_nc_ht=scontent.fkhi17-1.fna&oh=aa6120f2d9a426250fcefc212dcae717&oe=5E24F88E",
+              name : "Shakar Qandee"
+            }
+          })
+        }
+        else {
+          this.setState({
+            imageInfo : {
+              uri : "https://scontent.fkhi17-1.fna.fbcdn.net/v/t1.0-0/cp0/e15/q65/p320x320/58462296_2431269236883056_6958992074980982784_n.jpg?_nc_cat=103&efg=eyJpIjoiYiJ9&_nc_oc=AQlXU_nBw-qaxw5YQ99IBNsaW1j2Z97jSg0-kXZ3CNOL8T6fKuGs5N4P8ZpT6GGCZZo&_nc_ht=scontent.fkhi17-1.fna&oh=25babea41f3895b3013985afa8db419c&oe=5E1881C7",
+              name : "Shahster"
+            }
+          })
+        }
+    },2000) 
+  }
   render(){
     return (
-      <>
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}>
-            <Header />
-            {global.HermesInternal == null ? null : (
-              <View style={styles.engine}>
-                <Text style={styles.footer}>Engine: Hermes</Text>
-              </View>
-            )}
-            <View style={styles.body}>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Step One</Text>
-                <Text style={styles.sectionDescription}>
-                  Edit <Text style={styles.highlight}>App.js</Text> to change this
-                  screen and then come back to see your edits.
-                </Text>
-              </View>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>See Your Changes</Text>
-                <Text style={styles.sectionDescription}>
-                  <ReloadInstructions />
-                </Text>
-              </View>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Debug</Text>
-                <Text style={styles.sectionDescription}>
-                  <DebugInstructions />
-                </Text>
-              </View>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Learn More</Text>
-                <Text style={styles.sectionDescription}>
-                  Read the docs to discover what to do next:
-                </Text>
-              </View>
-              <LearnMoreLinks />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-      </>
+      <View style={styles.container}>
+        <Text style={[styles.welcome,this.state.customStyles]}>
+          Hello, {this.state.imageInfo.name}!
+        </Text>
+        <Image source ={this.state.imageInfo} style = {styles.img} />
+      </View>
     );
   }
 };
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  img :{
+    //flex: 1,
+    width: 300,
+    height: 300,
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  welcome :{
+    textAlign: 'center',
+    fontSize: 20,
+    margin: 10,
+    color: 'black'
   },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCF7',
+  }
 });
 
 //export default App;
