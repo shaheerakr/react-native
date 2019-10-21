@@ -38,12 +38,13 @@ export default class App extends Component{
     })
   }
   handleSubmit = () =>{
+    console.log(this._username._lastNativeText)
     this.setState({
       username : "",
       password : ""
     })
-    let textInput = this.refs["textInput"]
-    textInput.clear()
+    this._password.clear()
+    this._username.clear()
   }
   
   render(){
@@ -54,7 +55,7 @@ export default class App extends Component{
           <TextInput
             defaultValue = {this.state.username}
             onChangeText = {this.handleChangeUsername}
-            ref = "textInput"
+            ref = {input => this._username = input}
           />
         </View>
         <View>
@@ -62,7 +63,7 @@ export default class App extends Component{
           <TextInput
             defaultValue = {this.state.password}
             onChangeText = {this.handleChangePassword}
-            ref = "textInput"
+            ref = {input => this._password = input}
           />
         </View>
         <Button
