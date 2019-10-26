@@ -8,26 +8,88 @@ import {
     } from 'react-native';
 
 export default class App extends Component {
+  
+  constructor(props){
+    super(props)
+    this.state = {
+      resultText : '',
+      result : ''
+    }
+    this.oprends = ['del','/','*','-','+']
+  }
+
+  calculateResult = () =>{
+    //console.log(this.state.resultText,eval(this.state.resultText))
+    const result = eval(this.state.resultText)
+    this.setState({
+      resultText : '',
+      result : result
+    })
+  }
+
+  buttonPressed = (text) =>{
+    if (text === '=')
+      return this.calculateResult()
+    if( this.state.resultText+text === '0')
+      return
+    this.setState({
+      resultText : this.state.resultText+text
+    })
+    //console.log(text)
+  }
+
+  oprationPressed = (opration) =>{
+    switch (opration) {
+      case 'del':
+        let text = this.state.resultText.split('')
+        text.pop()
+        this.setState({
+          resultText: text.join('')
+        })
+        //console.log(text)
+        break;
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        if(this.oprends.indexOf(this.state.resultText.split('').pop()) > 0) 
+          return
+        if (this.state.resultText === '') 
+          return
+        this.setState({
+          resultText : this.state.resultText + opration
+        })
+        break
+      default:
+        break;
+    }
+  }
+
   render(){
-    let values = [7,8,9,4,5,6,1,2,3,'.',0,'=']
+    let values = [[7,8,9],[4,5,6],[1,2,3],['.',0,'=']]
     let rows = []
-    let count = 0
     for (let i = 0; i < 4; i++) {
       let row = []
       for (let j = 0; j < 3; j++) {
-        row.push(<TouchableOpacity style = {styles.btn} key = {count.toString()}>
-          <Text style = {styles.btnText} >{values[count]}</Text>
+        row.push(<TouchableOpacity 
+                  style = {styles.btn} 
+                  key = {values[i][j].toString()}
+                  onPress = {() => this.buttonPressed(values[i][j])}
+                  >
+          <Text style = {styles.btnText} >{values[i][j]}</Text>
         </TouchableOpacity>)
-        count++
       }
       rows.push(<View style = {styles.row} key = {i}>{row}</View>)
     }
     let ops = []
-    values = ['/','*','-','+']
-    values.map((opr,index) =>{
+    this.oprends.map((opr,index) =>{
       return(
         //console.log(count)
-        ops.push(<TouchableOpacity style = {styles.btn} key = {index} >
+        ops.push(<TouchableOpacity 
+                  style = {styles.btn} 
+                  key = {index}
+                  onPress = {() => this.oprationPressed(opr)}
+                  >
           <Text style = {styles.btnText} >{opr}</Text>
         </TouchableOpacity>)
       )
@@ -35,10 +97,10 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <View style = {styles.result}>
-          <Text style = {styles.resultText}>10*10</Text>
+          <Text style = {styles.resultText}>{this.state.resultText}</Text>
         </View>
         <View style = {styles.calculation}>
-          <Text style = {styles.calculationText}>100</Text>
+          <Text style = {styles.calculationText}>{this.state.result}</Text>
         </View>
         <View style = {styles.buttons}>
           <View style = {styles.numbers}>
