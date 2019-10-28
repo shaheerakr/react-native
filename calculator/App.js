@@ -15,7 +15,20 @@ export default class App extends Component {
       resultText : '',
       result : ''
     }
-    this.oprends = ['del','/','*','-','+']
+    this.oprends = ['DEL','/','*','-','+']
+  }
+
+  validate = () =>{
+    switch (this.state.resultText.split('').pop()) {
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+      case '.':
+        return false
+      default:
+        return true
+    }
   }
 
   calculateResult = () =>{
@@ -29,8 +42,10 @@ export default class App extends Component {
 
   buttonPressed = (text) =>{
     if (text === '=')
-      return this.calculateResult()
+      return this.validate() && this.calculateResult()
     if( this.state.resultText+text === '0')
+      return
+    if(this.state.resultText.split('').pop() === '.' && text === '.' )
       return
     this.setState({
       resultText : this.state.resultText+text
@@ -39,8 +54,10 @@ export default class App extends Component {
   }
 
   oprationPressed = (opration) =>{
+    if(this.state.resultText.split('').pop() === '.' && this.oprends.indexOf(opration) !== -1)
+      return
     switch (opration) {
-      case 'del':
+      case 'DEL':
         let text = this.state.resultText.split('')
         text.pop()
         this.setState({
@@ -121,24 +138,24 @@ const styles = StyleSheet.create({
   },
   result: {
     flex: 2,
-    backgroundColor: 'green',
+    backgroundColor: '#1C1C1C',
     justifyContent: 'center',
     alignItems :'flex-end',
   },
   calculation: {
     flex: 1,
-    backgroundColor: 'blue',
+    backgroundColor: '#D4D4D2',
     justifyContent: 'center',
     alignItems :'flex-end',
   },
   calculationText: {
     fontSize: 20,
-    color: 'white',
+    color: '#1C1C1C',
     margin: 10,
   },
   resultText: {
     fontSize: 40,
-    color: 'white',
+    color: '#D4D4D2',
     margin: 10,
   },
   buttons: {
@@ -147,19 +164,17 @@ const styles = StyleSheet.create({
   },
   numbers: {
     flex: 3,
-    backgroundColor: 'orange',
+    backgroundColor: '#505050',
   },
   oprations: {
     flex: 1,
     justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: 'yellow',
+    backgroundColor: '#FF9500',
   },
   row: {
     flexDirection: 'row',
     flex : 1,
-    borderWidth: 0.5,
-    borderColor: 'purple',
     justifyContent: 'space-around',
     alignItems: 'center'
   },
@@ -168,10 +183,9 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     justifyContent: 'center',
     flex : 1,
-    borderWidth: 0.5,
-    borderColor: 'purple'
   },
   btnText: {
     fontSize: 30,
+    color : '#D4D4D2'
   }
 });
