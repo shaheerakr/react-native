@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import styles from './styles'
 
-class Home extends Component {
+class Login extends Component {
     static navigationOptions = {
         header : null
     }
@@ -18,12 +18,14 @@ class Home extends Component {
     checkLogin = () =>{
         const {username,password} = this.state
         //console.log(username,password)
+        /*
         fetch('http://localhost:5000/hello')
         .then((response=> console.log(response)))
         fetch('http://localhost:5000/',JSON.stringify(username))
         .then((response)=>{
             console.log(response)
         })
+        */
         if(username.toLowerCase() === "admin" && password ==="admin"){
             this.props.navigation.navigate('dashboard')
         }
@@ -46,4 +48,4 @@ class Home extends Component {
     }
 }
 
-export default Home
+export default Login

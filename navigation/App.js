@@ -6,13 +6,14 @@ import {
   Button 
   } from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack'
+import {createDrawerNavigator} from 'react-navigation-drawer'
 import {createAppContainer} from 'react-navigation'
-import Home from './app/components/home/index'
+import Login from './app/components/home/index'
 import Dashboard from './app/components/Dashboard'
 
 
 const RootStack = createStackNavigator({
-  home : Home,
+  login : Login,
   dashboard : Dashboard, 
 })
 
